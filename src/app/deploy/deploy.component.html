@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1">
+            <button type="button" class="btn btn-info" (click)="modify()">modify</button>
+        </div>
+        <div class="col-11">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col" *ngIf="this.serverConfig">
+                        <strong>url : </strong> <pre>{{this.serverConfig.adminURL}}</pre>
+                        <strong>user : </strong> <pre>{{this.serverConfig.adminUsername}}</pre>
+                        <strong>pwd : </strong> <pre>{{this.serverConfig.adminPassword}}</pre>
+                        <strong>deployJar : </strong> <pre>{{this.serverConfig.deployPath}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            <button type="button" class="btn btn-info" (click)="addDeploy()">Add</button>
+        </div>
+        <div class="col-11" *ngIf="this.deployConfigs.length">
+            <div class="container-fluid" *ngFor="let deployConfig of this.deployConfigs;let idx = index;">
+                <div class="row">
+                    <div class="col-1">
+                        <button type="button" class="btn btn-danger" (click)="updateDeploy(idx)">modify</button>
+                        <hr>
+                        <button type="button" class="btn btn-warning" (click)="deleteDeploy(idx)">delete</button>
+                    </div>
+                    <div class="col-11">
+                        <strong>projectName : </strong>
+                        <pre>{{deployConfig.project}}</pre>
+                        <strong>warPath : </strong>
+                        <pre>{{deployConfig.warPath}}</pre>
+                        <strong>targetServer : </strong>
+                        <pre>{{deployConfig.target}}</pre>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <br>
+        </div>
+    </div>
+</div>
