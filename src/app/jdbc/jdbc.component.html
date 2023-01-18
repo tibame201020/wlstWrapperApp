@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1">
+            <button type="button" class="btn btn-info" (click)="modify()">modify</button>
+        </div>
+        <div class="col-11">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col" *ngIf="this.serverConfig">
+                        <strong>url : </strong> <pre>{{this.serverConfig.adminURL}}</pre>
+                        <strong>user : </strong> <pre>{{this.serverConfig.adminUsername}}</pre>
+                        <strong>pwd : </strong> <pre>{{this.serverConfig.adminPassword}}</pre>
+                        <strong>setDomainEnv : </strong> <pre>{{this.serverConfig.setDomainEnv}}</pre>
+                        <strong>execWlst : </strong><pre>{{this.serverConfig.execWlst}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            <button type="button" class="btn btn-info" (click)="addJdbc()">Add</button>
+        </div>
+        <div class="col-11" *ngIf="this.jdbcConfigs.length">
+            <div class="container-fluid" *ngFor="let jdbcConfig of this.jdbcConfigs;let idx = index;">
+                <div class="row">
+                    <div class="col-1">
+                        <button type="button" class="btn btn-danger" (click)="updateJdbc(idx)">modify</button>
+                        <hr>
+                        <button type="button" class="btn btn-warning" (click)="deleteJdbc(idx)">delete</button>
+                    </div>
+                    <div class="col-11">
+                        <strong>jdbcName : </strong>
+                        <pre>{{jdbcConfig.name}}</pre>
+                        <strong>jndiName : </strong>
+                        <pre>{{jdbcConfig.jndiName}}</pre>
+                        <strong>jdbcUrl : </strong>
+                        <pre>{{jdbcConfig.dsURL}}</pre>
+                        <strong>jdbcUser : </strong>
+                        <pre>{{jdbcConfig.user}}</pre>
+                        <strong>jdbcPwd : </strong>
+                        <pre>{{jdbcConfig.password}}</pre>
+                        <strong>targetServers : </strong>
+                        <pre>{{jdbcConfig.target}}</pre>
+                        <strong>JdbcDriver : </strong>
+                        <pre>{{jdbcConfig.driverClass}}</pre>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <br>
+        </div>
+    </div>
+</div>
