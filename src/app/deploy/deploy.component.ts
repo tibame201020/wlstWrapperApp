@@ -18,10 +18,58 @@ export class DeployComponent implements OnInit {
   serverConfig!: ServerConfig;
   deployConfigs: DeployConfig[] = [];
 
-  constructor(private wlstService: WlstService) {}
+  loadStatus: boolean = false;
+
+  constructor(private wlstService: WlstService) { }
 
   ngOnInit(): void {
     this.getLocalData();
+  }
+
+  execConfirm() {
+    if (!this.deployConfigs.length) {
+      Swal.fire({
+        icon: 'error',
+        text: '並無配置部屬項目',
+        timer: 1200,
+      });
+      return;
+    }
+
+    let msg = '確認部屬至weblogic?';
+    Swal.fire({
+      title: msg,
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.exec();
+      }
+    });
+  }
+
+  exec() {
+    this.loadStatus = true;
+    let serverDeploy: ServerDeploy = {
+      serverConfig: this.serverConfig,
+      deployConfigs: this.deployConfigs,
+    };
+    this.wlstService.exeDeploy(serverDeploy).subscribe((res) => {
+      this.loadStatus = false;
+      if (res) {
+        Swal.fire({
+          icon: 'success',
+          title: 'deploy finish',
+          showConfirmButton: true,
+          timer: 2500,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          text: '請確認config參數無誤',
+        });
+      }
+    });
   }
 
   getLocalData() {
@@ -128,6 +176,52 @@ export class DeployComponent implements OnInit {
       if (result.isConfirmed) {
         if (result.value) {
           this.deployConfigs[idx] = this.getDeployConfig(result.value);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: '格式錯誤',
+          });
+        }
+      }
+    });
+  }
+
+  copyDeploy(idx: number) {
+    let deployConfig = this.deployConfigs[idx];
+    Swal.fire({
+      title: 'Deploy Config',
+      html:
+        '<input id="project" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="' +
+        deployConfig.project +
+        '">' +
+        '<br>' +
+        '<br>' +
+        '<input id="warPath" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="' +
+        deployConfig.warPath +
+        '">' +
+        '<br>' +
+        '<br>' +
+        '<input id="target" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="' +
+        deployConfig.target +
+        '">',
+      preConfirm: function () {
+        return new Promise(function (resolve) {
+          let project = document.getElementById('project') as HTMLInputElement;
+          let warPath = document.getElementById('warPath') as HTMLInputElement;
+          let target = document.getElementById('target') as HTMLInputElement;
+          if (project && warPath && target) {
+            resolve([project.value, warPath.value, target.value]);
+          }
+        });
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.value) {
+          this.deployConfigs = [this.getDeployConfig(result.value)].concat(
+            this.deployConfigs
+          );
         } else {
           Swal.fire({
             icon: 'error',

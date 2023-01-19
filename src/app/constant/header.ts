@@ -11,6 +11,6 @@ export const HEADER: Bar = {
       name: 'Jdbc',
       link: '/jdbc',
       icon: '',
-    }
+    },
   ],
 };

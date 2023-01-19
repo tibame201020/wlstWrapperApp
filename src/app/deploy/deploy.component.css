@@ -1,0 +1,7 @@
+.top-stikcy {
+  z-index: 999;
+  position: sticky;
+  top: 6%;
+  left: 0;
+  background-color: white;
+}
