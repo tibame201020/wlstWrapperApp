@@ -1,23 +1,50 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="!this.loadStatus">
+    <div class="row top-stikcy">
+        <div class="col-2">
+            <button type="button" class="btn btn-dark" (click)="execConfirm()">exec</button>
+        </div>
+        <div class="col-2">
+            <ul class="drop-down-menu">
+                <li>
+                    <a>mode</a>
+                    <ul>
+                        <li>
+                            <a>
+                                <mat-slide-toggle [(ngModel)]="this.isInsertMode">Insert Mode</mat-slide-toggle>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
     <div class="row">
         <div class="col-1">
-            <button type="button" class="btn btn-info" (click)="modify()">modify</button>
+            <button type="button" class="btn btn-primary" (click)="modify()">modify</button>
         </div>
         <div class="col-11">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col" *ngIf="this.serverConfig">
-                        <strong>url : </strong> <pre>{{this.serverConfig.adminURL}}</pre>
-                        <strong>user : </strong> <pre>{{this.serverConfig.adminUsername}}</pre>
-                        <strong>pwd : </strong> <pre>{{this.serverConfig.adminPassword}}</pre>
-                        <strong>setDomainEnv : </strong> <pre>{{this.serverConfig.setDomainEnv}}</pre>
-                        <strong>execWlst : </strong><pre>{{this.serverConfig.execWlst}}</pre>
+                        <strong>url : </strong>
+                        <pre>{{this.serverConfig.adminURL}}</pre>
+                        <strong>user : </strong>
+                        <pre>{{this.serverConfig.adminUsername}}</pre>
+                        <strong>pwd : </strong>
+                        <pre>{{this.serverConfig.adminPassword}}</pre>
+                        <strong>setDomainEnv : </strong>
+                        <pre>{{this.serverConfig.setDomainEnv}}</pre>
+                        <strong>execWlst : </strong>
+                        <pre>{{this.serverConfig.execWlst}}</pre>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12">
             <hr>
@@ -26,12 +53,14 @@
 
     <div class="row">
         <div class="col-1">
-            <button type="button" class="btn btn-info" (click)="addJdbc()">Add</button>
+            <button type="button" class="btn btn-primary" (click)="addJdbc()">Add</button>
         </div>
         <div class="col-11" *ngIf="this.jdbcConfigs.length">
             <div class="container-fluid" *ngFor="let jdbcConfig of this.jdbcConfigs;let idx = index;">
                 <div class="row">
                     <div class="col-1">
+                        <button type="button" class="btn btn-info" (click)="copyJdbc(idx)">copy</button>
+                        <hr>
                         <button type="button" class="btn btn-danger" (click)="updateJdbc(idx)">modify</button>
                         <hr>
                         <button type="button" class="btn btn-warning" (click)="deleteJdbc(idx)">delete</button>
@@ -39,18 +68,18 @@
                     <div class="col-11">
                         <strong>jdbcName : </strong>
                         <pre>{{jdbcConfig.name}}</pre>
-                        <strong>jndiName : </strong>
-                        <pre>{{jdbcConfig.jndiName}}</pre>
-                        <strong>jdbcUrl : </strong>
-                        <pre>{{jdbcConfig.dsURL}}</pre>
-                        <strong>jdbcUser : </strong>
-                        <pre>{{jdbcConfig.user}}</pre>
+                        <strong *ngIf="this.isInsertMode">jndiName : </strong>
+                        <pre *ngIf="this.isInsertMode">{{jdbcConfig.jndiName}}</pre>
+                        <strong *ngIf="this.isInsertMode">jdbcUrl : </strong>
+                        <pre *ngIf="this.isInsertMode">{{jdbcConfig.dsURL}}</pre>
+                        <strong *ngIf="this.isInsertMode">jdbcUser : </strong>
+                        <pre *ngIf="this.isInsertMode">{{jdbcConfig.user}}</pre>
                         <strong>jdbcPwd : </strong>
                         <pre>{{jdbcConfig.password}}</pre>
-                        <strong>targetServers : </strong>
-                        <pre>{{jdbcConfig.target}}</pre>
-                        <strong>JdbcDriver : </strong>
-                        <pre>{{jdbcConfig.driverClass}}</pre>
+                        <strong *ngIf="this.isInsertMode">targetServers : </strong>
+                        <pre *ngIf="this.isInsertMode">{{jdbcConfig.target}}</pre>
+                        <strong *ngIf="this.isInsertMode">JdbcDriver : </strong>
+                        <pre *ngIf="this.isInsertMode">{{jdbcConfig.driverClass}}</pre>
                     </div>
                     <div class="col-12">
                         <hr>
@@ -64,4 +93,13 @@
             <br>
         </div>
     </div>
+</div>
+
+<div class="container-fluid" *ngIf="this.loadStatus">
+    <div class="row">
+        <div class="col">
+            <app-loading> </app-loading>
+        </div>
+    </div>
+
 </div>

@@ -1,7 +1,7 @@
 export interface ServerJdbc {
   serverConfig: ServerConfig;
   jdbcConfigs: DatasourceConfig[];
-  isInsertMode: boolean;
+  insertMode: boolean;
 }
 
 export interface ServerDeploy {

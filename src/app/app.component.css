@@ -1,12 +1,13 @@
-*{
-　font-family:Comic Sans MS,serif,sans-serif,cursive,fantasy,monospace;
+* {
+  　font-family: Comic Sans MS, serif, sans-serif, cursive, fantasy, monospace;
 }
 
 .header-stikcy {
   z-index: 999;
   position: sticky;
-  top: 1%;
+  top: 0%;
   left: 0;
+  background-color: white;
 }
 
 .sideBar {
@@ -25,7 +26,7 @@
 }
 
 .content {
- height: fit-content;
+  height: fit-content;
   border-left: 3px solid transparent;
   transition: all 0.1s;
 }

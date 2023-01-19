@@ -1,22 +1,32 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="!this.loadStatus">
+    <div class="row top-stikcy">
+        <div class="col-12">
+            <button type="button" class="btn btn-dark" (click)="execConfirm()">deploy</button>
+            <hr>
+        </div>
+    </div>
     <div class="row">
         <div class="col-1">
-            <button type="button" class="btn btn-info" (click)="modify()">modify</button>
+            <button type="button" class="btn btn-primary" (click)="modify()">modify</button>
         </div>
         <div class="col-11">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col" *ngIf="this.serverConfig">
-                        <strong>url : </strong> <pre>{{this.serverConfig.adminURL}}</pre>
-                        <strong>user : </strong> <pre>{{this.serverConfig.adminUsername}}</pre>
-                        <strong>pwd : </strong> <pre>{{this.serverConfig.adminPassword}}</pre>
-                        <strong>deployJar : </strong> <pre>{{this.serverConfig.deployPath}}</pre>
+                        <strong>url : </strong>
+                        <pre>{{this.serverConfig.adminURL}}</pre>
+                        <strong>user : </strong>
+                        <pre>{{this.serverConfig.adminUsername}}</pre>
+                        <strong>pwd : </strong>
+                        <pre>{{this.serverConfig.adminPassword}}</pre>
+                        <strong>deployJar : </strong>
+                        <pre>{{this.serverConfig.deployPath}}</pre>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12">
             <hr>
@@ -25,12 +35,14 @@
 
     <div class="row">
         <div class="col-1">
-            <button type="button" class="btn btn-info" (click)="addDeploy()">Add</button>
+            <button type="button" class="btn btn-primary" (click)="addDeploy()">Add</button>
         </div>
         <div class="col-11" *ngIf="this.deployConfigs.length">
             <div class="container-fluid" *ngFor="let deployConfig of this.deployConfigs;let idx = index;">
                 <div class="row">
                     <div class="col-1">
+                        <button type="button" class="btn btn-info" (click)="copyDeploy(idx)">copy</button>
+                        <hr>
                         <button type="button" class="btn btn-danger" (click)="updateDeploy(idx)">modify</button>
                         <hr>
                         <button type="button" class="btn btn-warning" (click)="deleteDeploy(idx)">delete</button>
@@ -55,4 +67,13 @@
             <br>
         </div>
     </div>
+</div>
+
+<div class="container-fluid" *ngIf="this.loadStatus">
+    <div class="row">
+        <div class="col">
+            <app-loading> </app-loading>
+        </div>
+    </div>
+
 </div>
